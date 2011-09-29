@@ -86,8 +86,8 @@
   <ItemGroup>
     <Compile Include="DebugConnectionProvider.cs" />
     <Compile Include="NHSpecificTest\BugTestCase.cs" />
-    <Compile Include="NHSpecificTest\NH1234\DomainClass.cs" />
-    <Compile Include="NHSpecificTest\NH1234\SampleTest.cs" />
+    <Compile Include="NHSpecificTest\NH1234\AnyDomain.cs" />
+    <Compile Include="NHSpecificTest\NH1234\AnyTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TestConfigurationHelper.cs" />

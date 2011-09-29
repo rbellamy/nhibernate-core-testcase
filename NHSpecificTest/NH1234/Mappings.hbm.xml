@@ -1,11 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="NHibernate.Test"
-                   namespace="NHibernate.Test.NHSpecificTest.NH1234" default-access="field.camelcase"
-                   default-lazy="false">
-  <class name="DomainClass">
-    <id name="Id">
-      <generator class="assigned" />
-    </id>
-    <property name="ByteData" />
-  </class>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="NHibernate.Test" namespace="NHibernate.Test.NHSpecificTest.NH1234" default-access="property" default-lazy="false">
+	<class name="Order" table="Orders">
+		<id name="Id">
+			<generator class="native" />
+		</id>
+		<any name="Payment" id-type="System.Int64" meta-type="System.String" cascade="all">
+			<meta-value value="CreditCard" class="CreditCardPayment" />
+			<meta-value value="Wire" class="WirePayment" />
+			<column name="PaymentType" />
+			<column name="PaymentId" />
+		</any>
+	</class>
+	<class name="CreditCardPayment" table="CreditCardPayments">
+		<id name="Id">
+			<generator class="native" />
+		</id>
+		<property name="IsSuccessful" />
+		<property name="Amount" />
+		<property name="CardNumber" />
+	</class>
+	<class name="WirePayment" table="WirePayments">
+		<id name="Id">
+			<generator class="native" />
+		</id>
+		<property name="IsSuccessful" />
+		<property name="Amount" />
+		<property name="BankAccountNumber" />
+	</class>
 </hibernate-mapping>

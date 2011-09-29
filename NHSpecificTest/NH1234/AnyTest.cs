@@ -5,19 +5,18 @@ using NUnit.Framework;
 namespace NHibernate.Test.NHSpecificTest.NH1234
 {
 	[TestFixture]
-	public class SampleTest : BugTestCase
+	public class AnyTest : BugTestCase
 	{
 		[Test]
-		public void BytePropertyShouldBeRetrievedCorrectly()
+		public void PaymentTypeShouldBeCorrectWithCorrectData()
 		{
 			using (ISession session = this.OpenSession())
 			{
-				DomainClass entity = session.Get<DomainClass>(1);
-
-				Assert.AreEqual(3, entity.ByteData.Length);
-				Assert.AreEqual(1, entity.ByteData[0]);
-				Assert.AreEqual(2, entity.ByteData[1]);
-				Assert.AreEqual(3, entity.ByteData[2]);
+				Order entity = session.Get<Order>(1L);
+				Assert.That(entity.Payment, Is.InstanceOf<CreditCardPayment>());
+				IPayment payment = entity.Payment;
+				Assert.That(payment.IsSuccessful, Is.True);
+				Assert.That(payment.Amount, Is.EqualTo(5));
 			}
 		}
 
@@ -31,9 +30,16 @@ namespace NHibernate.Test.NHSpecificTest.NH1234
 			base.OnSetUp();
 			using (ISession session = this.OpenSession())
 			{
-				DomainClass entity = new DomainClass();
-				entity.Id = 1;
-				entity.ByteData = new byte[] { 1, 2, 3 };
+				Order entity = new Order
+				{
+					Payment = new CreditCardPayment
+					{
+						Amount = 5,
+						CardNumber = "1234",
+						IsSuccessful = true
+					}
+				};
+
 				session.Save(entity);
 				session.Flush();
 			}
