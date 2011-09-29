@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="NHibernate.Test" namespace="NHibernate.Test.NHSpecificTest.NH1234" default-access="property" default-lazy="false">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" assembly="NHibernate.Test" namespace="NHibernate.Test.NHSpecificTest.ANY" default-access="property" default-lazy="false">
 	<class name="Order" table="Orders">
 		<id name="Id">
 			<generator class="native" />
@@ -19,6 +19,10 @@
 		<property name="IsSuccessful" />
 		<property name="Amount" />
 		<property name="CardNumber" />
+		<set name="Orders" inverse="true">
+			<key column="PaymentId" />
+			<one-to-many class="Order" />
+		</set>
 	</class>
 	<class name="WirePayment" table="WirePayments">
 		<id name="Id">
@@ -27,5 +31,9 @@
 		<property name="IsSuccessful" />
 		<property name="Amount" />
 		<property name="BankAccountNumber" />
+		<set name="Orders" inverse="true">
+			<key column="PaymentId" />
+			<one-to-many class="Order" />
+		</set>
 	</class>
 </hibernate-mapping>

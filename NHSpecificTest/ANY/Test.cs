@@ -1,11 +1,11 @@
-﻿using NHibernate.Dialect;
+using NHibernate.Dialect;
 
 using NUnit.Framework;
 
-namespace NHibernate.Test.NHSpecificTest.NH1234
+namespace NHibernate.Test.NHSpecificTest.ANY
 {
 	[TestFixture]
-	public class AnyTest : BugTestCase
+	public class Test : BugTestCase
 	{
 		[Test]
 		public void PaymentTypeShouldBeCorrectWithCorrectData()
@@ -17,6 +17,7 @@ namespace NHibernate.Test.NHSpecificTest.NH1234
 				IPayment payment = entity.Payment;
 				Assert.That(payment.IsSuccessful, Is.True);
 				Assert.That(payment.Amount, Is.EqualTo(5));
+				Assert.That(payment.Orders.Contains(entity), Is.True);
 			}
 		}
 
