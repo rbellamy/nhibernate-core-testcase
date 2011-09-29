@@ -3,6 +3,8 @@ using System.Collections;
 using System.Data;
 using System.Reflection;
 
+using HibernatingRhinos.Profiler.Appender.NHibernate;
+
 using NHibernate.Cfg;
 using NHibernate.Connection;
 using NHibernate.Engine;
@@ -451,6 +453,7 @@ namespace NHibernate.Test
 
 		private void Configure()
 		{
+			NHibernateProfiler.Initialize();
 			this.cfg = new Configuration();
 			if (TestConfigurationHelper.hibernateConfigFile != null)
 			{
