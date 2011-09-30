@@ -1,3 +1,6 @@
+using System.Linq;
+
+using NHibernate.Criterion;
 using NHibernate.Dialect;
 
 using NUnit.Framework;
@@ -17,7 +20,21 @@ namespace NHibernate.Test.NHSpecificTest.ANY
 				IPayment payment = entity.Payment;
 				Assert.That(payment.IsSuccessful, Is.True);
 				Assert.That(payment.Amount, Is.EqualTo(5));
-				Assert.That(payment.Orders.Contains(entity), Is.True);
+				Assert.That(payment.Order, Is.EqualTo(entity));
+			}
+		}
+
+		[Test]
+		public void PaymentCanBeQueriedByOrder()
+		{
+			using (ISession session = this.OpenSession())
+			{
+				DetachedCriteria criteria = DetachedCriteria.For<Payment>()
+					.CreateAlias("orders", "o")
+					.Add(Expression.Eq("o.Id", 1L));
+
+				Payment entity = criteria.GetExecutableCriteria(session).List<Payment>().FirstOrDefault();
+				Assert.That(entity.Order.Id, Is.EqualTo(1));
 			}
 		}
 

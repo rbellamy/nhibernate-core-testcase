@@ -19,7 +19,7 @@
 		<property name="IsSuccessful" />
 		<property name="Amount" />
 		<property name="CardNumber" />
-		<set name="Orders" inverse="true">
+		<set name="orders" inverse="true" access="field">
 			<key column="PaymentId" />
 			<one-to-many class="Order" />
 		</set>
@@ -31,7 +31,7 @@
 		<property name="IsSuccessful" />
 		<property name="Amount" />
 		<property name="BankAccountNumber" />
-		<set name="Orders" inverse="true">
+		<set name="orders" inverse="true" access="field">
 			<key column="PaymentId" />
 			<one-to-many class="Order" />
 		</set>
